@@ -27,5 +27,3 @@ Customize the server and client modules to meet your project requirements.
 Build and run the server and client components as needed.
 #### Contributors
 Daniele Carrozzino - carroch97@outlook.it
-#### License
-This project is licensed under the MIT License - see the LICENSE file for details.
