@@ -3,9 +3,9 @@
 This project demonstrates a simple TCP server and client implemented in Go, using the Transport Layer Security (TLS) protocol for secure communication. The project is structured into multiple folders, including client, server, utility, structure, and tlsconfigurator, to maintain a clean and organized codebase.
 
 ### Features
-. Server Implementation: The project provides a flexible server implementation with an interface, ServerInterface, defining methods like GetDns(), Start(), Read(conn net.Conn), and WriteFile(buffer *bytes.Buffer, fileExt string) error. This allows for easy customization and extension of the server's functionality.
-. TLS Encryption: TLS is used to encrypt the communication between the server and client, ensuring data confidentiality and security.
-. Client Implementation: The client is designed for simplicity, with a single main method, SendFile, responsible for sending files over the TCP connection.
+- Server Implementation: The project provides a flexible server implementation with an interface, ServerInterface, defining methods like GetDns(), Start(), Read(conn net.Conn), and WriteFile(buffer *bytes.Buffer, fileExt string) error. This allows for easy customization and extension of the server's functionality.
+- TLS Encryption: TLS is used to encrypt the communication between the server and client, ensuring data confidentiality and security.
+- Client Implementation: The client is designed for simplicity, with a single main method, SendFile, responsible for sending files over the TCP connection.
 
 ### Project Structure
 - client: Contains the client-side code.
