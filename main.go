@@ -15,14 +15,12 @@ func main() {
 
 	go func() {
 		time.Sleep(2 * time.Second)
-		fmt.Println("Send file")
 		err := client.SendFile()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(-1)
 		}
 		time.Sleep(2 * time.Second)
-		fmt.Println("Send file")
 		err = client.SendFile()
 		if err != nil {
 			fmt.Println(err)
