@@ -13,7 +13,7 @@ import (
 )
 
 var parentDir string = utility.GetCurrentDirectory()
-var filePath  string = Path.Join(parentDir, "client", "example.txt")
+var filePath  string = Path.Join(parentDir, "client", "foto.jpg")
 
 func getFileInBytes() []byte {
     // Read the contents of the file into a byte slice
