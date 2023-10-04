@@ -23,10 +23,9 @@ func (s *Server) GetDns() string {
 }
 
 /**
-* Main method.
-* It starts the main server's loop,
-* it starts a tls protocol communication
-* over the 3000
+* Start is the main method for the Server.
+* It initiates the main server's loop,
+* starts a TLS protocol communication over port 3000.
 */
 func (s *Server) Start() {
 	//|***************
@@ -66,7 +65,8 @@ func (s *Server) Start() {
 */
 func (s *Server) Read(conn net.Conn){
 
-	buf := new(bytes.Buffer)
+	bufHeader 	:= new(bytes.Buffer)
+	bufFile 	:= new(bytes.Buffer)
 
 	for {
 
@@ -79,36 +79,46 @@ func (s *Server) Read(conn net.Conn){
 		}
 
 		// Extract header
-		size 	:= int64(binary.LittleEndian.Uint64(header[:8]))
-		fileExt := string(header[8:])
-		fmt.Println(size, fileExt, header)
+		sizeFile 	:= int64(binary.LittleEndian.Uint64(header[:8]))
+		sizeHeader 	:= int64(binary.LittleEndian.Uint64(header[8:]))
 		
-		// Extract file
-		n, err := io.CopyN(buf, conn, size)
+		// Extract header
+		n, err := io.CopyN(bufHeader, conn, sizeHeader)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("Received %d bytes over the network\n", n)
+		fmt.Printf("Received %d bytes - header\n", n)
+		fileName := bufHeader.String()
+
+		// Extract file
+		nFile, err := io.CopyN(bufFile, conn, sizeFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Received %d bytes - file\n", nFile)
 		
 		// Write file on disk
-		err2 := s.WriteFile(buf, fileExt)
-		if err2 != nil {
-			fmt.Println(err2)
+		err = s.WriteFile(bufFile, fileName)
+		if err != nil {
+			fmt.Println(err)
 			os.Exit(-1)
 		} 
-		fmt.Printf("File written", n)
+
+		bufHeader.Reset()
+        bufFile.Reset()
 	}
 }
 
 /**
 * Write file on disk
 */
-func (s *Server)WriteFile(buffer *bytes.Buffer, fileExt string) error {
+func (s *Server)WriteFile(buffer *bytes.Buffer, fileName string) error {
 	parentDir 	:= utility.GetCurrentDirectory()
-	filePath 	:= filepath.Join(parentDir, "output", "output" + fileExt)
+	filePath 	:= filepath.Join(parentDir, "output", fileName)
+	fmt.Println(filePath)
 
     // Open the file for appending (create if it doesn't exist)
-    file, err := os.OpenFile("output.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+    file, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
     if err != nil {
         fmt.Println("Error opening file:", err)
         return err
