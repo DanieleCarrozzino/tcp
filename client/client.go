@@ -54,7 +54,6 @@ func SendFile() error {
 	//|***************
 	//| 	TLS 	 |
 	//****************
-	fmt.Println(">Get tls config")
 	config, err := tls_config.GetClientTlsConfig()
 	if err != nil {
 		return err

@@ -31,7 +31,6 @@ func (s *Server) Start() {
 	//|***************
 	//| 	TLS 	 |
 	//****************
-	fmt.Println(">Get tls config")
 	config, err := tls_config.GetServerTlsConfig()
 	if err != nil {
 		fmt.Println(err)
@@ -41,15 +40,17 @@ func (s *Server) Start() {
 	//|***************
 	//| 	TCP 	 |
 	//****************
-	fmt.Println(">>Start listen tcp")
 	ln, err := tls.Listen("tcp", ":3000", config)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
 
-	fmt.Println(">>> Starting read")
 	for {
+
+		// Accept
+		fmt.Println("Accept")
+
 		conn, err := ln.Accept()
 		if err != nil {
 			fmt.Println(err)
@@ -70,11 +71,14 @@ func (s *Server) Read(conn net.Conn){
 
 	for {
 
+		// Read
+		fmt.Println("Read")
+
 		// Get the header of the communication
 		header := make([]byte, 16)
 		_, err := io.ReadFull(conn, header)
 		if err != nil {
-			fmt.Println("Failed to read header:", err)
+			fmt.Println("Failed to read header:", err, len(header), header)
 			os.Exit(-1)
 		}
 
@@ -106,6 +110,7 @@ func (s *Server) Read(conn net.Conn){
 
 		bufHeader.Reset()
         bufFile.Reset()
+		return
 	}
 }
 
