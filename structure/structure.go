@@ -15,3 +15,9 @@ type ServerInterface interface {
 type ClientInterface interface {
 	SendFile()
 }
+
+type ClientGenerator interface {
+	CreateKey()
+	CreateCSR()
+	CreateCRT()
+}

@@ -5,13 +5,25 @@ import (
 	"fmt"
 	"time"
 	"os"
-	structure "go/tcp/carrozzino/structure"
-	server    "go/tcp/carrozzino/server"
-	client    "go/tcp/carrozzino/client"
 
+	//server client communication
+	structure 	"go/tcp/carrozzino/structure"
+	server    	"go/tcp/carrozzino/server"
+	client    	"go/tcp/carrozzino/client"
+
+	//cert and key creation
+	creation 	"go/tcp/carrozzino/creation"
 )
 
 func main() {
+
+	if true {
+		var client_generator structure.ClientGenerator =
+			&creation.Gen{} 
+		client_generator.CreateKey();
+		client_generator.CreateCSR();
+		client_generator.CreateCRT();
+	}
 
 	go func() {
 		time.Sleep(2 * time.Second)
